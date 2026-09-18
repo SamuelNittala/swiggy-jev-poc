@@ -1,8 +1,8 @@
 # Swiggy × Jev POC
 
-A small dine-in restaurant recommendation app. This first step is **scaffolding
-only**: it does not connect to Swiggy or TypeSafe, collect credentials, or return
-restaurant recommendations.
+A small dine-in restaurant recommendation app. The current step is a **local input
+form and preference preview**: it does not connect to Swiggy or TypeSafe, collect
+credentials, or return restaurant recommendations.
 
 ## Stack
 
@@ -22,7 +22,26 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. No API keys are needed for the scaffold.
+Open http://localhost:3000. No API keys are needed for this step.
+
+## Try the form
+
+1. Choose a demo location (Indiranagar or Koramangala, Bengaluru).
+2. Enter a positive whole-rupee target budget for two, such as `1000`.
+3. Enter a single search concept, such as `Chinese`, or click an example chip.
+4. Optionally add preferences such as `Quiet, preferably outdoors`.
+5. Click **Preview preferences** to review the validated input.
+
+Editing any field clears the previous preview; **Clear form** resets all fields.
+Values stay in browser memory and are lost on reload. No API request is sent.
+Required-field errors are associated with their controls; invalid submissions
+focus the first invalid field.
+
+The location selector is deliberately a demo, not a geocoder. Its two coordinates
+come from the [Swiggy search reference](https://mcp.swiggy.com/builders/docs/reference/dineout/search_restaurants_dineout/).
+Live location lookup will replace it in a later step. Budget is labelled as a
+target, not a hard maximum or guaranteed bill. The form guides users to enter a
+single search concept but does not attempt semantic query parsing.
 
 ## Validate
 
@@ -39,9 +58,14 @@ build after `npm run build`. Use `npm run test:watch` during development.
 ```text
 src/app/
   layout.tsx       Root document and metadata
-  page.tsx         Static landing page
+  page.tsx         Landing page with the discovery form
   page.test.tsx    Landing-page smoke test
   globals.css      Base styles and responsive layout
+src/features/discovery/
+  preferences.ts           Pure validation and typed preference data
+  preferences.test.ts      Validation tests
+  search-form.tsx          Client-side input form and preview
+  search-form.test.tsx     Interaction tests using Testing Library and jsdom
 ```
 
 ## Planned boundaries
@@ -53,7 +77,7 @@ src/app/
 3. **Pure application functions:** validate inputs, apply budget rules, and rank
    candidates from restaurant facts and evidence-aware preference judgments.
 
-These modules will be added when implemented, rather than as empty abstractions.
+Remaining modules will be added when implemented, rather than as empty abstractions.
 Swiggy will supply restaurant facts; Jev will assess subjective preference fit
 only where evidence is available. Unknown attributes must remain unknown.
 Restaurant details will be fetched only after a user selects a search result.

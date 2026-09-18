@@ -1,3 +1,5 @@
+import SearchForm from "../features/discovery/search-form";
+
 export default function Home() {
   return (
     <main className="shell">
@@ -15,17 +17,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="status-card" aria-labelledby="status-title">
-        <span className="badge">Scaffold ready</span>
-        <h2 id="status-title">The foundation is in place.</h2>
-        <p>
-          Next up: choose a location, set a budget for two, and tell us what
-          you&apos;re looking for.
-        </p>
-        <p className="status-note">
-          No restaurant searches or AI requests are made yet.
-        </p>
-      </section>
+      <SearchForm />
 
       <footer>Independent proof of concept · Dine-in discovery only</footer>
     </main>
